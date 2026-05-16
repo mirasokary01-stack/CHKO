@@ -334,7 +334,6 @@ def main():
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&display=swap');
 * { font-family: 'Cairo', sans-serif !important; }
 
-/* ── Dark palette ── */
 :root {
     --bg:        #0f1117;
     --surface:   #1a1d27;
@@ -350,19 +349,32 @@ def main():
     --yellow-l:  #1e1a0a;
     --yellow-b:  #4a3a00;
     --yellow-t:  #f0c040;
+    --red-muted: #ff6b6b;
 }
 
 .stApp { background: var(--bg); color: var(--text); }
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding-top: 1.2rem !important; max-width: 680px; }
 
+/* ── Hide sidebar completely ── */
+[data-testid="collapsedControl"],
+section[data-testid="stSidebar"] {
+    display: none !important;
+}
+
+/* ── Remove column gaps ── */
+[data-testid="stHorizontalBlock"] {
+    gap: 8px !important;
+    align-items: center !important;
+}
+
 /* ── header ── */
 .shiko-header {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 18px 20px;
-    margin-bottom: 14px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 14px;
@@ -370,31 +382,93 @@ def main():
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 .shiko-avatar {
-    width: 52px; height: 52px;
+    width: 50px; height: 50px;
     background: var(--accent-l);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     flex-shrink: 0;
     border: 2px solid var(--accent-d);
 }
 .shiko-name {
-    font-size: 1.15rem; font-weight: 900;
+    font-size: 1.1rem; font-weight: 900;
     color: var(--text); margin: 0; line-height: 1.2;
 }
 .shiko-name em { color: var(--accent); font-style: normal; }
-.shiko-sub { font-size: 0.76rem; color: var(--muted); margin: 2px 0 0; }
+.shiko-sub { font-size: 0.74rem; color: var(--muted); margin: 2px 0 0; }
 .online { color: var(--green); font-weight: 700; }
 .day-tag {
     margin-right: auto;
     background: var(--accent-l);
     color: var(--accent);
     border-radius: 20px;
-    padding: 4px 13px;
-    font-size: 0.74rem;
+    padding: 4px 12px;
+    font-size: 0.73rem;
     font-weight: 700;
     white-space: nowrap;
     border: 1px solid var(--border);
+}
+
+/* ── links row ── */
+.links-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    direction: rtl;
+}
+.ql {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px 12px;
+    text-decoration: none !important;
+    color: var(--text) !important;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+.ql:hover {
+    background: var(--accent-l);
+    border-color: var(--accent-d);
+    color: var(--accent) !important;
+}
+
+/* ── clear button (stButton override) ── */
+.stButton > button {
+    background: var(--surface2) !important;
+    color: var(--muted) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 10px !important;
+    font-family: 'Cairo', sans-serif !important;
+    font-size: 0.76rem !important;
+    padding: 6px 12px !important;
+    height: 36px !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    transition: all 0.15s !important;
+}
+.stButton > button:hover {
+    color: var(--red-muted) !important;
+    border-color: var(--red-muted) !important;
+    background: var(--surface2) !important;
+}
+
+/* ── exam expander ── */
+[data-testid="stExpander"] {
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    margin-bottom: 10px !important;
+}
+[data-testid="stExpander"] summary {
+    color: var(--text) !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    direction: rtl !important;
 }
 
 /* ── tip ── */
@@ -402,11 +476,11 @@ def main():
     background: var(--yellow-l);
     border: 1px solid var(--yellow-b);
     border-radius: 12px;
-    padding: 9px 14px;
-    font-size: 0.79rem;
+    padding: 8px 14px;
+    font-size: 0.77rem;
     color: var(--yellow-t);
     direction: rtl;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     line-height: 1.8;
 }
 
@@ -450,59 +524,6 @@ def main():
 .grade-num { font-size: 3rem; font-weight: 900; color: var(--green); line-height: 1; }
 .grade-lbl { font-size: 0.78rem; color: #4ecba8; margin-top: 3px; opacity: 0.8; }
 
-/* ── sidebar ── */
-[data-testid="stSidebar"] {
-    background: var(--surface) !important;
-    border-left: 1px solid var(--border) !important;
-}
-[data-testid="stSidebar"] .block-container { padding: 1.2rem 1rem !important; }
-[data-testid="stSidebar"] * { color: var(--text) !important; }
-
-.sb-sec {
-    font-size: 0.7rem; font-weight: 700;
-    color: var(--muted) !important; letter-spacing: 1.1px;
-    text-transform: uppercase;
-    margin: 14px 0 7px; direction: rtl;
-}
-.ql {
-    display: flex; align-items: center; gap: 9px;
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 10px; padding: 9px 12px; margin-bottom: 7px;
-    text-decoration: none !important; color: var(--text) !important;
-    font-size: 0.81rem; direction: rtl; transition: all 0.15s;
-}
-.ql:hover {
-    background: var(--accent-l);
-    border-color: var(--accent-d);
-    color: var(--accent) !important;
-}
-
-/* ── expander (exam schedule) ── */
-[data-testid="stExpander"] {
-    background: var(--surface2) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 12px !important;
-}
-[data-testid="stExpander"] summary {
-    color: var(--text) !important;
-    font-size: 0.85rem !important;
-    font-weight: 600 !important;
-}
-
-/* ── streamlit elements dark override ── */
-.stButton button {
-    background: var(--surface2) !important;
-    color: var(--text) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 10px !important;
-    font-family: 'Cairo', sans-serif !important;
-}
-.stButton button:hover {
-    background: var(--accent-l) !important;
-    border-color: var(--accent-d) !important;
-    color: var(--accent) !important;
-}
-
 /* ── chat input ── */
 [data-testid="stChatInput"] textarea {
     background: var(--surface) !important;
@@ -520,10 +541,7 @@ def main():
     color: var(--muted) !important;
 }
 
-/* ── spinner ── */
 .stSpinner > div { border-top-color: var(--accent) !important; }
-
-/* ── divider ── */
 hr { border-color: var(--border) !important; }
 </style>
 """, unsafe_allow_html=True)
@@ -537,34 +555,6 @@ hr { border-color: var(--border) !important; }
     if not records:
         st.error(f"❌ ملف output.json مش موجود! المجلد: {os.getcwd()}")
         st.stop()
-
-    # ── Sidebar ──────────────────────────────────────────────────
-    with st.sidebar:
-        st.markdown("### 🤖 شيكو")
-        st.caption("مساعدك الجامعي — كلية الحاسوب")
-        st.divider()
-
-        st.markdown('<p class="sb-sec">روابط سريعة</p>', unsafe_allow_html=True)
-        for icon, label, url in [
-            ("📚", "منصة المواد (LMS)", "https://mnulms.menofia.education/login/index.php"),
-            ("✅", "نظام الحضور",       "https://mnulms.menofia.education/attendance"),
-            ("📁", "درايف الملخصات",    "https://drive.google.com/drive/mobile/folders/1MZ079RA9Pj2l7J81O0InWJelhITMPNox"),
-        ]:
-            st.markdown(
-                f'<a class="ql" href="{url}" target="_blank"><span>{icon}</span><span>{label}</span></a>',
-                unsafe_allow_html=True
-            )
-
-        # ── Exam schedule — hidden behind expander ────────────────
-        if os.path.exists("page-1.jpg"):
-            st.divider()
-            with st.expander("📋 جدول الامتحانات", expanded=False):
-                st.image("page-1.jpg", use_container_width=True)
-
-        st.divider()
-        if st.button("🗑️ مسح المحادثة", use_container_width=True):
-            st.session_state.messages = []
-            st.rerun()
 
     # ── Header ───────────────────────────────────────────────────
     st.markdown(f"""
@@ -580,6 +570,54 @@ hr { border-color: var(--border) !important; }
         <span class="day-tag">📅 {today_ar()}</span>
     </div>
     """, unsafe_allow_html=True)
+
+    # ── Toolbar: Links + Clear button (all in one HTML row) ──────
+    # Use session_state flag to show/hide exam image
+    if "show_exam" not in st.session_state:
+        st.session_state.show_exam = False
+
+    col_links, col_btn = st.columns([5, 1])
+
+    with col_links:
+        exam_label = "📋 الامتحانات ▲" if st.session_state.show_exam else "📋 الامتحانات ▼"
+        st.markdown(f"""
+        <div class="links-row">
+            <a class="ql" href="https://mnulms.menofia.education/login/index.php" target="_blank">📚 منصة المواد</a>
+            <a class="ql" href="https://mnulms.menofia.education/attendance" target="_blank">✅ الحضور</a>
+            <a class="ql" href="https://drive.google.com/drive/mobile/folders/1MZ079RA9Pj2l7J81O0InWJelhITMPNox" target="_blank">📁 الملخصات</a>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col_btn:
+        if st.button("🗑️ مسح"):
+            st.session_state.messages = []
+            st.rerun()
+
+    # ── Exam toggle button (full width, below toolbar) ────────────
+    if os.path.exists("page-1.jpg"):
+        exam_label = "📋 جدول الامتحانات ▲ — إخفاء" if st.session_state.show_exam else "📋 جدول الامتحانات ▼ — اضغط للعرض"
+        st.markdown(f"""
+        <style>
+        div[data-testid="stButton"].exam-toggle > button {{
+            width: 100% !important;
+            background: var(--surface) !important;
+            color: var(--text) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            font-size: 0.82rem !important;
+            font-weight: 600 !important;
+            padding: 8px 14px !important;
+            height: auto !important;
+            direction: rtl !important;
+            text-align: right !important;
+        }}
+        </style>
+        """, unsafe_allow_html=True)
+        if st.button(exam_label, key="exam_toggle"):
+            st.session_state.show_exam = not st.session_state.show_exam
+            st.rerun()
+        if st.session_state.show_exam:
+            st.image("page-1.jpg", use_container_width=True)
 
     # ── Tip ──────────────────────────────────────────────────────
     st.markdown("""
